@@ -4,6 +4,7 @@ from swecc_course_scraper.commands.frequency import DEFAULT_YEARS_CHECK
 from swecc_course_scraper.commands.frequency import command as frequency
 from swecc_course_scraper.commands.login import command as login
 from swecc_course_scraper.commands.schedule import command as schedule
+from swecc_course_scraper.commands.course_info import command as course_info
 
 
 def main(args: argparse.Namespace) -> None:
@@ -21,6 +22,8 @@ def main(args: argparse.Namespace) -> None:
                 else DEFAULT_YEARS_CHECK
             )
             print(frequency(course_code, check_years))
+        elif args.course_info:
+            print(course_info(args.course_info))
         else:
             print("No command specified. Use --help to show all commands.")
 
@@ -54,5 +57,14 @@ if __name__ == "__main__":
             " years) \n"
             "e.g.: --frequency CSE143 5"
         ),
+    )
+    parser.add_argument(
+        "--course_info",
+        metavar="COURSE_CODE",
+        type=str,
+        help="Get detailed course information (credits, general education requirements, "
+        "description, and prerequisites) for a specific course code. \n "
+        "COURSE_CODE: Course code to check \n"
+        "e.g.: --course_info PHYS121",
     )
     main(parser.parse_args())
